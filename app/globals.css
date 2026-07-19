@@ -1,0 +1,494 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────
+   White-clay + glassmorphism palette.
+   Light: warm parchment canvas, white-clay nodes float above it
+          with multi-layer shadows, glass-frosted panels.
+   Dark:  deep charcoal canvas, dark-clay surfaces, glass panels.
+   ────────────────────────────────────────────────────────────── */
+:root {
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Canvas + surfaces */
+  --bg-canvas: #ECE7DC;
+  --bg-canvas-tint-warm: rgba(217, 174, 130, 0.10);
+  --bg-canvas-tint-cool: rgba(140, 168, 200, 0.08);
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F5F3ED;
+
+  /* Glass — translucent frosted layers */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.94);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-blur: blur(22px) saturate(180%);
+
+  /* Ink */
+  --ink: #1D1D1F;
+  --ink-soft: #424246;
+  --ink-mute: #86868B;
+  --ink-faint: #B0AFB4;
+
+  /* Lines */
+  --line: rgba(40, 35, 25, 0.10);
+  --line-soft: rgba(40, 35, 25, 0.06);
+
+  /* Accent — ink-as-accent for max restraint */
+  --accent: #1D1D1F;
+  --accent-soft: #424246;
+  --accent-tint: rgba(29, 29, 31, 0.08);
+  --accent-strong: #000000;
+
+  /* Wires */
+  --wire: rgba(40, 35, 25, 0.48);
+  --wire-active: #1D1D1F;
+
+  /* Category dots — desaturated editorial */
+  --cat-text: #6E6BBF;
+  --cat-image: #5C8579;
+  --cat-video: #A05A6A;
+  --cat-edit: #5A6F8A;
+  --cat-mask: #7A8050;
+  --cat-helper: #8B7250;
+  --cat-output: #555555;
+
+  /* WHITE CLAY shadow stack — pillowy depth, multi-layer.
+     Inset top highlight = rim of light.
+     Inset bottom darker = subtle indentation.
+     Three outer drops = stratified shadow from contact to ambient. */
+  --shadow-clay:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(70, 55, 35, 0.05),
+    0 1px 2px rgba(70, 55, 35, 0.06),
+    0 6px 18px rgba(70, 55, 35, 0.12),
+    0 22px 44px rgba(70, 55, 35, 0.08);
+
+  --shadow-clay-soft:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(70, 55, 35, 0.05),
+    0 4px 12px rgba(70, 55, 35, 0.08);
+
+  --shadow-clay-pressed:
+    inset 0 2px 5px rgba(70, 55, 35, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5),
+    0 1px 1px rgba(70, 55, 35, 0.04);
+
+  --shadow-card: var(--shadow-clay-soft);
+  --shadow-lift: var(--shadow-clay);
+
+  /* Radius */
+  --r-pill: 9999px;
+  --r-card: 22px;
+  --r-card-lg: 28px;
+}
+
+.dark {
+  --bg-canvas: #18171A;
+  --bg-canvas-tint-warm: rgba(217, 174, 130, 0.04);
+  --bg-canvas-tint-cool: rgba(140, 168, 200, 0.04);
+  --bg-surface: #232228;
+  --bg-elevated: #2D2B33;
+
+  --glass-bg: rgba(35, 34, 40, 0.60);
+  --glass-bg-strong: rgba(34, 32, 38, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --ink: #F5F5F7;
+  --ink-soft: #C7C7CC;
+  --ink-mute: #8E8E93;
+  --ink-faint: #5A5A5F;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.05);
+
+  --accent: #F5F5F7;
+  --accent-soft: #C7C7CC;
+  --accent-tint: rgba(245, 245, 247, 0.10);
+  --accent-strong: #FFFFFF;
+
+  --wire: rgba(255, 255, 255, 0.32);
+  --wire-active: #F5F5F7;
+
+  --cat-text: #8A87D9;
+  --cat-image: #7DA59B;
+  --cat-video: #C77B89;
+  --cat-edit: #7E92AD;
+  --cat-mask: #9DA56C;
+  --cat-helper: #B59371;
+  --cat-output: #909094;
+
+  --shadow-clay:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 10px 28px rgba(0, 0, 0, 0.5),
+    0 24px 56px rgba(0, 0, 0, 0.35);
+
+  --shadow-clay-soft:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 6px 16px rgba(0, 0, 0, 0.4);
+
+  --shadow-clay-pressed:
+    inset 0 2px 6px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 1px rgba(0, 0, 0, 0.2);
+
+  --shadow-card: var(--shadow-clay-soft);
+  --shadow-lift: var(--shadow-clay);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease;
+  /* Canvas with soft radial tints — gives the light mode depth */
+  background:
+    radial-gradient(ellipse at 18% 12%, var(--bg-canvas-tint-warm), transparent 55%),
+    radial-gradient(ellipse at 82% 88%, var(--bg-canvas-tint-cool), transparent 55%),
+    var(--bg-canvas);
+  background-attachment: fixed;
+}
+
+/* ── Utility classes for white-clay + glass ───────────────────── */
+.clay-surface {
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-clay);
+}
+.clay-surface-soft {
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-clay-soft);
+}
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+.clay-press {
+  box-shadow: var(--shadow-clay);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+.clay-press:hover { transform: translateY(-1px); }
+.clay-press:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-clay-pressed);
+}
+.clay-press-soft {
+  box-shadow: var(--shadow-clay-soft);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+.clay-press-soft:hover { transform: translateY(-1px); box-shadow: var(--shadow-clay); }
+.clay-press-soft:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-clay-pressed);
+}
+
+/* ── React Flow theme overrides ───────────────────────────────── */
+.react-flow__controls {
+  border-radius: var(--r-pill) !important;
+  overflow: hidden !important;
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--shadow-clay-soft) !important;
+}
+.react-flow__controls button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--line-soft) !important;
+  color: var(--ink-soft) !important;
+  fill: var(--ink-soft) !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.react-flow__controls button:last-child { border-bottom: none !important; }
+.react-flow__controls button:hover {
+  background: var(--bg-elevated) !important;
+  color: var(--ink) !important;
+  fill: var(--ink) !important;
+}
+.react-flow__controls button svg { fill: inherit !important; }
+
+.react-flow__minimap {
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--shadow-clay-soft) !important;
+  overflow: hidden;
+}
+
+/* AccentEdge paints its own gradient stroke based on source/target node
+   categories. These rules only apply as a fallback to any edge that
+   doesn't go through AccentEdge (e.g. while a connection is being dragged). */
+.react-flow__edge-path {
+  stroke: var(--wire);
+  stroke-width: 2;
+}
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: var(--wire-active);
+  stroke-width: 2.5;
+}
+/* Connection-in-progress preview line (the rubber-band wire while
+   dragging from a handle) keeps a muted neutral stroke. */
+.react-flow__connection-path {
+  stroke: var(--wire);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+.react-flow__connection-path {
+  stroke: var(--wire-active) !important;
+  stroke-width: 2 !important;
+  stroke-dasharray: 5 5;
+}
+
+.react-flow__handle {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease !important;
+  width: 13px !important;
+  height: 13px !important;
+  border: 2.5px solid var(--bg-surface) !important;
+  box-shadow: 0 1px 3px rgba(70, 55, 35, 0.18), inset 0 1px 1px rgba(255,255,255,0.4) !important;
+}
+.react-flow__handle:hover {
+  transform: scale(1.55) !important;
+  box-shadow: 0 0 0 5px var(--accent-tint), 0 0 16px rgba(70, 55, 35, 0.25), inset 0 1px 1px rgba(255,255,255,0.4) !important;
+}
+/* Expand the invisible click/drag hit area so it's forgiving — looks 13px,
+   acts like 24px. Critical for making drag-to-connect feel right. */
+.react-flow__handle::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+}
+
+.react-flow__attribution { display: none !important; }
+
+/* ── Scrollbar ────────────────────────────────────────────────── */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: var(--line); border-radius: var(--r-pill); }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+
+/* Show scrollbar only while the container is hovered. */
+.scrollbar-on-hover::-webkit-scrollbar { width: 6px; }
+.scrollbar-on-hover::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-on-hover::-webkit-scrollbar-thumb { background: transparent; border-radius: var(--r-pill); transition: background 0.18s ease; }
+.scrollbar-on-hover:hover::-webkit-scrollbar-thumb { background: var(--line); }
+.scrollbar-on-hover:hover::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+
+/* ── Form bits ────────────────────────────────────────────────── */
+select option { background: var(--bg-surface); color: var(--ink); }
+input[type=range] { cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { cursor: grab; }
+input[type=range]:active::-webkit-slider-thumb { cursor: grabbing; }
+
+/* ── Animations ───────────────────────────────────────────────── */
+@keyframes fade-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fade-in 0.25s ease-out; }
+
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.animate-float { animation: float 4s ease-in-out infinite; }
+
+/* Rainbow shimmer strip — applied while an external actor (Claude Code,
+   a script) is operating on a node, OR while the node's run handler is
+   in-flight. A thin neon rainbow band sits across the TOP edge of the
+   card and flows left-to-right. No rotation, no full-perimeter ring —
+   just a horizontal "this card is working" indicator like the top of a
+   progress bar. Fades in fast and disappears when the pulse class is
+   removed. */
+@keyframes shimmer-flow {
+  /* Two cycles of the same gradient stitched side-by-side means panning
+     the background -200% lands exactly where we started — no visible
+     seam, perfectly continuous flow. */
+  from { background-position: 0% 0; }
+  to   { background-position: -200% 0; }
+}
+@keyframes shimmer-fade-in {
+  from { opacity: 0; transform: scaleY(0.5); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+.node-pulsing {
+  position: relative;
+}
+.node-pulsing::before {
+  content: '';
+  position: absolute;
+  /* Span the FULL card, not a 3px sliver. A full-height box lets
+     border-radius: inherit round the top corners with the card's real
+     24px circular radius (a 3px-tall box clamps the vertical radius to
+     1.5px, so the strip overhangs the curve and floats). We then mask
+     everything below 3px away, leaving a rim that hugs the corner. */
+  inset: 0;
+  border-radius: inherit;
+  /* Two consecutive rainbow cycles so a -200% pan lands seamlessly. */
+  background: linear-gradient(
+    90deg,
+    #ff006e, #fb5607, #ffbe0b, #06ffa5, #3a86ff, #8338ec,
+    #ff006e, #fb5607, #ffbe0b, #06ffa5, #3a86ff, #8338ec
+  );
+  background-size: 200% 100%;
+  /* Reveal only the top 3px — this thin band follows the rounded top edge. */
+  -webkit-mask: linear-gradient(to bottom, #000 0, #000 3px, transparent 3px);
+          mask: linear-gradient(to bottom, #000 0, #000 3px, transparent 3px);
+  /* Glow via drop-shadow (not box-shadow) so it traces the masked rim,
+     not the whole card box. */
+  filter:
+    drop-shadow(0 0 5px rgba(255, 0, 110, 0.4))
+    drop-shadow(0 0 9px rgba(58, 134, 255, 0.28));
+  animation:
+    shimmer-flow 1.6s linear infinite,
+    shimmer-fade-in 220ms ease-out;
+  transform-origin: top;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Cyberpunk neon halo — selected nodes light up like neon signs.
+   Crisp inner rim → vivid mid bloom → soft ambient atmospheric glow.
+   The bloom pulses to give a "buzzing" sign effect. */
+@keyframes node-breathe-color {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1.5px var(--node-accent, var(--ink)),
+      0 0 0 5px  color-mix(in srgb, var(--node-accent, var(--ink)) 50%, transparent),
+      0 0 18px  color-mix(in srgb, var(--node-accent, var(--ink)) 60%, transparent),
+      0 0 42px  color-mix(in srgb, var(--node-accent, var(--ink)) 45%, transparent),
+      0 0 84px  color-mix(in srgb, var(--node-accent, var(--ink)) 25%, transparent),
+      var(--shadow-clay);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1.5px var(--node-accent, var(--ink)),
+      0 0 0 6px  color-mix(in srgb, var(--node-accent, var(--ink)) 65%, transparent),
+      0 0 26px  color-mix(in srgb, var(--node-accent, var(--ink)) 80%, transparent),
+      0 0 58px  color-mix(in srgb, var(--node-accent, var(--ink)) 55%, transparent),
+      0 0 104px color-mix(in srgb, var(--node-accent, var(--ink)) 32%, transparent),
+      var(--shadow-clay);
+  }
+}
+.node-selected-glow {
+  animation: node-breathe-color 2.2s ease-in-out infinite;
+}
+
+/* Sidebar node icons — monochrome at rest, category-colored on row hover.
+   Color comes from the inline --hover-color custom property each row sets
+   based on its category. Keeps the sidebar quiet until you reach for it. */
+.group:hover > .node-icon-tile {
+  color: var(--hover-color);
+  background: color-mix(in srgb, var(--hover-color) 12%, transparent);
+}
+
+@keyframes node-pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.node-pop-in { animation: node-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* Plus Jakarta Sans display treatment — bold weight, tight tracking
+   so big display text reads as a confident header instead of body. */
+.font-display {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Canvas backdrop ────────────────────────────────────────────
+   Layered behind React Flow. The radial brightens the centre so
+   nodes feel "lit", then a faint drifting noise breaks the flat dark
+   without obscuring the dot grid. Both pointer-events:none so they
+   never intercept pan/zoom. */
+.canvas-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.canvas-backdrop-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 35%,
+      color-mix(in srgb, var(--bg-surface) 22%, transparent) 0%,
+      transparent 70%),
+    radial-gradient(ellipse 100% 100% at 50% 100%,
+      color-mix(in srgb, var(--accent) 4%, transparent) 0%,
+      transparent 60%);
+}
+.canvas-backdrop-noise {
+  position: absolute;
+  inset: -10%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+  background-size: 220px 220px;
+  mix-blend-mode: overlay;
+  opacity: 0.045;
+  animation: canvas-drift 80s linear infinite;
+}
+@keyframes canvas-drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-220px, 220px, 0); }
+}
+
+/* ─── Empty-canvas hero ──────────────────────────────────────────── */
+@keyframes hero-arrow-pulse {
+  0%, 100% { transform: translateX(0);   opacity: 0.35; }
+  50%      { transform: translateX(-10px); opacity: 0.9; }
+}
+.hero-arrow-pulse { animation: hero-arrow-pulse 1.9s ease-in-out infinite; }
+@keyframes hero-drop-ring {
+  0%   { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+.hero-drop-ring { animation: hero-drop-ring 1.8s ease-out infinite; }
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-fade-up { animation: hero-fade-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* ─── Selected-node hero treatment ────────────────────────────────
+   When ANY node is selected, the unselected nodes desaturate + dim a
+   touch so the selected one pops. :has() is supported across modern
+   browsers (Safari 15.4+, Chrome 105+, Firefox 121+). */
+.react-flow:has(.react-flow__node.selected) .react-flow__node:not(.selected) {
+  opacity: 0.5;
+  filter: saturate(0.65);
+}
+.react-flow__node {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+/* When a node is selected, layer a sharper outer halo on top of the
+   existing color-breathing glow. Targets the inner card so it doesn't
+   bleed into edge handles. */
+.node-selected-glow::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--node-accent, var(--accent)) 65%, transparent),
+    0 0 24px color-mix(in srgb, var(--node-accent, var(--accent)) 35%, transparent);
+}
