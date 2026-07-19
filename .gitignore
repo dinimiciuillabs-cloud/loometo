@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Production builds
+build/
+dist/
+
+# Environment files — KEEP SECRETS OUT OF GIT
+.env
+.env.local
+.env.*.local
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.swp
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Dev server output (the detached process logs)
+dev.out.log
+dev.err.log
+
+
+# Internal tooling / build artifacts
+.impeccable/
+tsconfig.tsbuildinfo
